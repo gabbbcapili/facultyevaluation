@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-dialog padding-t-10" role="document">
 	<form action="{{ $action }}" method="POST" class="form" enctype='multipart/form-data'>
     @method('DELETE')
 		@csrf

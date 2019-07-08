@@ -13,5 +13,6 @@ class DepartmentTableSeeder extends Seeder
     public function run()
     {
         Department::create(['name' => 'College of Computing Studies']);
+         Department::create(['name' => 'College of Engineering']);
     }
 }

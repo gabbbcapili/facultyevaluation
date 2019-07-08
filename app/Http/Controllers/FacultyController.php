@@ -92,7 +92,7 @@ class FacultyController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => $e->getMessage()
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }
@@ -148,21 +148,10 @@ class FacultyController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => $e->getMessage()
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }
         return response()->json($output);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

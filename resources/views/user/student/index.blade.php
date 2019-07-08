@@ -17,18 +17,26 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Users List</h3>
+              <h3 class="box-title">Faculties List</h3>
+                <div class="box-tools">
+                  <div class="btn-group">
+                  <a href="#" class="btn btn-block btn-primary modal_button" data-href="{{ action('StudentController@create') }} "><i class="fa fa-plus"></i> Add Student</a>
+                </div>
+              </div>
             </div> <!-- /.box-header -->
-
              <div class="box-body">
               <div class="table-responsive">
               <table id="users-table" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th class="text-center">Student ID</th>
+                  <th class="text-center">Department</th>
                   <th class="text-center">Full name</th>
+                  <th class="text-center">Username</th>
                   <th class="text-center">Email</th>
-                  <th class="text-center">Created At</th>
+                  <th class="text-center">Gender</th>
+                  <th class="text-center">Contact Number</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
               </table>
@@ -49,17 +57,26 @@
 @section('javascript')
 <script type="text/javascript">
  $( document ).ready(function() {
-  $('#users-table').DataTable({
+  var student_table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
         ajax: '{{ route('student.index') }}',
         columns: [
             { data: 'student_id', name: 'student_id' },
+            { data: 'department', name: 'department.name' },
             { data: 'full_name', name: 'full_name' },
+            { data: 'username', name: 'username' },
             { data: 'email', name: 'email' },
-            { data: 'created_at', name: 'created_at' },
+            { data: 'gender', name: 'gender' },
+            { data: 'contact_number', name: 'contact_number' },
+            { data: 'action', name: 'action' },
         ]
     });
+  $('[data-toggle="tooltip"]').tooltip();
+
+  $('.view_modal').on('hidden.bs.modal', function () {
+    student_table.ajax.reload();
+  });
 });
  </script>
 @endsection

@@ -77,7 +77,7 @@ class DepartmentController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => 'Sorry something went wrong.'
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }
@@ -129,7 +129,7 @@ class DepartmentController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => 'Sorry something went wrong.'
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }
@@ -154,7 +154,7 @@ class DepartmentController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => 'Sorry something went wrong.'
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }

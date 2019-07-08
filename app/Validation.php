@@ -10,7 +10,8 @@ class Validation extends Model
         // unique:table,column,except,idColumn
     	return [
     		'department_id' => ['required'],
-    		'faculty_id' => ['sometimes', 'int' , 'required', 'unique:users'],
+            'student_id' => ['sometimes', 'int' , 'required', 'unique:users,student_id' , 'unique:users,faculty_id'],
+    		'faculty_id' => ['sometimes', 'int' , 'required', 'unique:users,student_id' , 'unique:users,faculty_id'],
     		'first_name' => ['required'],
     		'last_name' => ['required'],
             'email' => ['required' , 'email', 'unique:users,email,' . $id],

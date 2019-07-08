@@ -25,7 +25,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => 'Sorry something went wrong.'
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }
@@ -67,7 +67,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
             $output = ['success' => 0,
-                        'msg' => 'Sorry something went wrong.'
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
                     ];
              DB::rollBack();
         }
@@ -76,7 +76,7 @@ class UserController extends Controller
 
 // test functions
     public function createStudents(){
-        $user = factory(User::class, 100)->create();
+        $user = factory(User::class, 2000)->create();
         dd($user);
     }
 }
