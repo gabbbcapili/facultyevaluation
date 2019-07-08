@@ -1,6 +1,4 @@
 $( document ).ready(function() {
-    $('.datatable').DataTable();
-
      $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -49,6 +47,7 @@ $( document ).ready(function() {
               }
             },
             error: function(jqXhr, json, errorThrown){
+              toastr.error('test');
             console.log(jqXhr);
             console.log(json);
             console.log(errorThrown);

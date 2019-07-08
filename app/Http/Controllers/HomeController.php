@@ -23,9 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (request()->user()->isAdmin()){
-            return redirect()->action('ContactController@index');
-        }
         return view('home');
     }
 }

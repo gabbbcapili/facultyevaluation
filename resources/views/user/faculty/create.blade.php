@@ -1,0 +1,134 @@
+<div class="modal-dialog modal-lg" role="document">
+	<form action="{{ action('FacultyController@store') }}" method="POST" class="form" enctype='multipart/form-data'>
+		@csrf
+  <div class="modal-content">
+  	<div class="modal-header">
+		<button type="button" class="close no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="modalTitle">Add Faculty
+		</h4>
+	</div>
+	<div class="modal-body">
+    <div class="row">
+      <div class="col-sm-4">
+          <div class="form-group">
+            <label>Department ID:</label>
+           <select class="form-control" name="department_id">
+             <option hidden selected></option>
+             @foreach($departments as $department)
+                <option value="{{ $department->id }}">{{ $department->name }}</option>
+             @endforeach
+           </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Faculty ID:</label>
+            <input type="text" name="faculty_id" class="form-control">
+          </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>First Name:</label>
+          <input type="text" name="first_name" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Middle Name:</label>
+          <input type="text" name="middle_name" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Last Name:</label>
+          <input type="text" name="last_name" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Email:</label>
+            <input type="text" name="email" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-4">
+        <div class="form-group">
+          <label>Contact Number:</label>
+          <input type="text" name="contact_number" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Birth Date:</label>
+          <input type="date" name="bday" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Gender:</label>
+         <select class="form-control" name="gender">
+           <option value="Male">Male</option>
+           <option value="Female">Female</option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label>Civil Status:</label>
+          <select class="form-control" name="civil_status">
+            @foreach($civil_statuses as $civil_status)
+                <option value="{{ $civil_status }}">{{ $civil_status }}</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary no-print btn_save"><i class="fa fa-save"></i> Save
+      </button>
+      </form>
+      <button type="button" class="btn btn-default no-print" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(".form").submit(function(e) {
+    e.preventDefault();
+     $('.btn_save').prop('disabled', true);
+      $.ajax({
+        url : $(this).attr('action'),
+        type : 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function(result){
+          if(result.success == true){
+            toastr.success(result.msg);
+            $('.view_modal').modal('toggle');
+          }else{
+            if(result.msg){
+              toastr.error(result.msg);
+            }
+             $('.error').remove();
+                $.each(result.error, function(index, val){
+                $('[name="'+ index +'"]').after('<label class="text-danger error">' + val + '</label>');
+                });
+          }
+          $('.btn_save').prop('disabled', false);
+           },
+          error: function(jqXhr, json, errorThrown){
+            console.log(jqXhr);
+            console.log(json);
+            console.log(errorThrown);
+            $('.btn_save').prop('disabled', false);
+          }
+      });
+  });
+</script>

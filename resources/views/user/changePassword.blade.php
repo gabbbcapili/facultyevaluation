@@ -1,5 +1,5 @@
 <div class="modal-dialog modal-xl" role="document">
-	<form action="{{ action('UserController@changePasswordUpdate') }}" id="changePW" method="POST" enctype="multipart/form-data">
+	<form action="{{ action('UserController@changePasswordUpdate') }}" class="form" method="POST" enctype="multipart/form-data">
 	@method('put')
 		@csrf	
   <div class="modal-content">
@@ -43,50 +43,36 @@
 
 
 <script type="text/javascript">
-	$("#changePW").submit(function(e) {
-		e.preventDefault();
-		 $('.btn_save').prop('disabled', true);
-			window.swal({
-			 	  title: "Checking...",
-				  text: "Please wait",
-				  button: false,
-				  allowOutsideClick: false
-				});
-			$.ajax({
-				url : $(this).attr('action'),
-				type : 'POST',
-				data : $(this).serialize(),
-				success: function(data){
-					console.log(data);
-					if(data.status){
-						toastr.error(data.status);
-					}
-					if (data.success){
-						toastr.success(data.success);
-						$('.view_modal ').modal('hide');
-					}
-			        if (data.error){
-			        	$('.error').remove();
-			        	$.each(data.error, function(index, val){
-			        		console.log(index);
-			        	$('input[id="'+ index +'"]').after('<label class="text-danger error">' + val + '</label>');
-			        	});
-			        }
-			        setTimeout(() => {
-						  window.swal({
-						    title: "Something's not right..",
-						    button: false,
-						    timer: 300
-						  });
-						}, 500);
-			      	 $('.btn_save').prop('disabled', false);
-			     },
-			    error: function(jqXhr, json, errorThrown){
-			    	console.log(jqXhr);
-			    	console.log(json);
-			    	console.log(errorThrown);
-			    	$('.btn_save').prop('disabled', false);
-			    }
-			});
-	});
+	$(".form").submit(function(e) {
+    e.preventDefault();
+     $('.btn_save').prop('disabled', true);
+      $.ajax({
+        url : $(this).attr('action'),
+        type : 'POST',
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        success: function(result){
+          if(result.success == true){
+            toastr.success(result.msg);
+            $('.view_modal').modal('toggle');
+          }else{
+            if(result.msg){
+              toastr.error(result.msg);
+            }
+             $('.error').remove();
+                $.each(result.error, function(index, val){
+                $('[name="'+ index +'"]').after('<label class="text-danger error">' + val + '</label>');
+                });
+          }
+          $('.btn_save').prop('disabled', false);
+           },
+          error: function(jqXhr, json, errorThrown, result){
+            console.log(jqXhr);
+            console.log(json);
+            console.log(errorThrown);
+            $('.btn_save').prop('disabled', false);
+          }
+      });
+  });
 </script>

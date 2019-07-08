@@ -3,88 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 use Hash;
 use Auth;
 use Validator;
+use Faker\Factory;
+use App\User;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function destroy(User $user)
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+        try {
+            DB::beginTransaction();
+            $user->update(['active' => false]);
+            DB::commit();
+            $output = ['success' => 1,
+                        'msg' => 'User '. $user->getFullName() . ' successfully deleted!'
+                    ];
+        } catch (\Exception $e) {
+            \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
+            $output = ['success' => 0,
+                        'msg' => 'Sorry something went wrong.'
+                    ];
+             DB::rollBack();
+        }
+        return response()->json($output);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function delete(User $user){
+        $action = action('UserController@destroy', $user->id);
+        $title = 'user ' . $user->getFullName();
+        return view('layouts.delete', compact('action' , 'title'));
     }
 
     public function changePasswordForm(){
@@ -104,10 +55,28 @@ class UserController extends Controller
     if ($validator->fails()) {
         return response()->json(['error' => $validator->errors()]);
         }
+        try {
+        DB::beginTransaction();
         $user = request()->user();
         $user->password = Hash::make($request->NewPassword);
-        $user->save();
-        return response()->json(['success' => 'Successfully changed password!']);
+        $user->save(); 
+        DB::commit();
+        $output = ['success' => 1,
+                        'msg' => 'Successfully changed password!'
+                    ];
+        } catch (\Exception $e) {
+            \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
+            $output = ['success' => 0,
+                        'msg' => 'Sorry something went wrong.'
+                    ];
+             DB::rollBack();
+        }
+        return response()->json($output);
+    }
 
+// test functions
+    public function createStudents(){
+        $user = factory(User::class, 100)->create();
+        dd($user);
     }
 }

@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'department_id', 'faculty_id', 'first_name', 'middle_name', 'last_name', 'username' , 'bday', 'civil_status', 'contact_number' , 'email', 'password' , 'role', 'gender', 'active'
     ];
 
     /**
@@ -30,10 +30,32 @@ class User extends Authenticatable
     ];
 
     public function isAdmin(){
-        if (env('ADMIN') == $this->email){
+        if (env('ADMIN') == $this->username){
             return true;
         }else{
             return false;
         }
+    }
+
+    public static function getCivilStatus(){
+        return [
+            'Single',
+            'Married',
+            'Widowed',
+            'Separated',
+            'Divorced',
+        ];
+    }
+
+    public function getProfilePicture(){
+         return url('/images/' . $this->profile_img);
+      }
+
+    public function getFullName(){
+        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+    }
+
+    public function department(){
+        return $this->belongsTo(\App\Department::class, 'department_id', 'id');
     }
 }
