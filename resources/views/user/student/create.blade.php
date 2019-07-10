@@ -11,13 +11,13 @@
     <div class="row">
       <div class="col-sm-4">
           <div class="form-group">
-            <label>Department ID:</label>
-           <select class="form-control" name="department_id">
-             <option hidden selected></option>
-             @foreach($departments as $department)
-                <option value="{{ $department->id }}">{{ $department->name }}</option>
-             @endforeach
-           </select>
+            <label>Department:</label>
+            <select class="form-control" name="department_id">
+              <option hidden selected></option>
+              @foreach($departments as $department)
+                 <option value="{{ $department->id }}">{{ $department->name }}</option>
+              @endforeach
+            </select>
           </div>
         </div>
         <div class="col-sm-4">
@@ -92,43 +92,10 @@
     <div class="modal-footer">
       <button type="submit" class="btn btn-primary no-print btn_save"><i class="fa fa-save"></i> Save
       </button>
-      </form>
       <button type="button" class="btn btn-default no-print" data-dismiss="modal">Close</button>
     </div>
   </div>
+ </form>
 </div>
 
-<script type="text/javascript">
-	$(".form").submit(function(e) {
-    e.preventDefault();
-     $('.btn_save').prop('disabled', true);
-      $.ajax({
-        url : $(this).attr('action'),
-        type : 'POST',
-        data: new FormData(this),
-        processData: false,
-        contentType: false,
-        success: function(result){
-          if(result.success == true){
-            toastr.success(result.msg);
-            $('.view_modal').modal('toggle');
-          }else{
-            if(result.msg){
-              toastr.error(result.msg);
-            }
-             $('.error').remove();
-                $.each(result.error, function(index, val){
-                $('[name="'+ index +'"]').after('<label class="text-danger error">' + val + '</label>');
-                });
-          }
-          $('.btn_save').prop('disabled', false);
-           },
-          error: function(jqXhr, json, errorThrown){
-            console.log(jqXhr);
-            console.log(json);
-            console.log(errorThrown);
-            $('.btn_save').prop('disabled', false);
-          }
-      });
-  });
-</script>
+<script src="{{ asset('js/forms/form-modal.js') }}"></script>

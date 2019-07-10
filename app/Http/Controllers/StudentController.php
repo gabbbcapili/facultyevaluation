@@ -154,4 +154,75 @@ class StudentController extends Controller
         }
         return response()->json($output);
     }
+
+    public function import(){
+        $departments = Department::all()->where('is_deleted', false);
+        $headers = User::studentCsvHeader();
+        return view('user.student.import', compact('departments', 'headers'));
+    }
+
+    public function postImport(Request $request){
+        $validator = Validator::make($request->all(), Validation::userCsvValidator());
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()]);
+        }
+
+        if ($request->hasFile('file')) {
+            try {
+                $department_id = $request->input('department_id');
+                $csv = array_map('str_getcsv', file($request->file));
+                array_shift($csv);
+                foreach($csv as $data){
+                    // dd($loop->iteration);
+                    $username = $data[0];
+                    $password = Hash::make(Utilities::format_date($data[6], 'mdy'));
+                    $data = [
+                        'username' => $username,
+                        'password' => $password,
+                        'department_id' => $department_id,
+                        'student_id' => $data[0],
+                        'first_name' => $data[1],
+                        'middle_name' => $data[2],
+                        'last_name' => $data[3],
+                        'email' => $data[4],
+                        'contact_number' => $data[5],
+                        'bday' => $data[6],
+                        'gender' => $data[7],
+                        'civil_status' => 'Single',
+                    ];
+                    User::create($data);
+                }   
+                $output = ['success' => 1,
+                        'msg' => 'Successfully imported students.'
+                    ];
+            } catch (\Exception $e) {
+            \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
+            $output = ['success' => 0,
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
+                    ];
+             DB::rollBack();
+            }
+            return response()->json($output);
+        }
+    }
+
+    public function getCSV(){
+       $filename = 'StudentSampleCSV.csv'; 
+       header("Content-Description: File Transfer"); 
+       header("Content-Disposition: attachment; filename=$filename"); 
+       header("Content-Type: application/csv; ");
+       $file = fopen('php://output', 'w');
+       $headers = User::studentCsvHeader(); 
+       fputcsv($file, $headers);
+       fclose($file); 
+       exit;
+    }
+
+
+
+
+
+
+
 }

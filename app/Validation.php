@@ -21,4 +21,11 @@ class Validation extends Model
             'gender' => ['required'],
     	];
     }
+
+    public static function userCsvValidator(){
+        return [
+            'department_id' => ['required'],
+            'file' => ['required', 'mimes:csv,txt']
+        ];
+    }
 }

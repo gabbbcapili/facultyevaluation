@@ -28,6 +28,10 @@ Route::get('user/changePassword', 'UserController@changePasswordForm')->middlewa
 Route::put('user/changePassword', 'UserController@changePasswordUpdate')->middleware('auth');
 Route::get('createStudents', 'UserController@createStudents')->middleware('admin');
 
+Route::get('student/import', 'StudentController@import')->middleware('admin');
+Route::get('student/getCSV', 'StudentController@getCSV')->middleware('admin');
+Route::post('student/import', 'StudentController@postImport')->middleware('admin');
+
 Route::delete('user/{user}', 'UserController@destroy')->middleware('admin');
 Route::get('user/delete/{user}', 'UserController@delete')->middleware('admin');
 

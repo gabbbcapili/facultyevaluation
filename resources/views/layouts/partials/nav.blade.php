@@ -34,6 +34,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="{{ $request->segment(1) == 'student' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('StudentController@index') }}"><i class="fa fa-list"></i> List Students </a></li>
+            <li class="{{ $request->segment(1) == 'student' && $request->segment(2) == 'import' ? 'active' : '' }}"><a href="{{ action('StudentController@import') }}"><i class="fa fa-download"></i> Import Students </a></li>
           </ul>
         </li>     
 

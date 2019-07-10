@@ -58,4 +58,10 @@ class User extends Authenticatable
     public function department(){
         return $this->belongsTo(\App\Department::class, 'department_id', 'id');
     }
+
+    public static function studentCsvHeader(){
+        return [
+            'Student ID', 'First Name', 'Middle Name', 'Last Name', 'Email', 'Contact Number', 'Birth Date', 'Gender'
+        ];
+    }
 }

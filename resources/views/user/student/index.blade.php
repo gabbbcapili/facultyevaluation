@@ -17,7 +17,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Faculties List</h3>
+              <h3 class="box-title">Students List</h3>
                 <div class="box-tools">
                   <div class="btn-group">
                   <a href="#" class="btn btn-block btn-primary modal_button" data-href="{{ action('StudentController@create') }} "><i class="fa fa-plus"></i> Add Student</a>

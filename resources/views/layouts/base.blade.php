@@ -175,6 +175,6 @@
 });
 </script>
 <div class="modal fade view_modal" tabindex="-1" role="dialog" 
-        aria-labelledby="gridSystemModalLabel" data-backdrop="static"  data-keyboard="false"></div>
+        aria-labelledby="gridSystemModalLabel" data-backdrop="static"></div>
 </body>
 </html>
