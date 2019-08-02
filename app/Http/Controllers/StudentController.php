@@ -24,7 +24,7 @@ class StudentController extends Controller
         if ( request()->ajax()) {
            $users = User::
             with('department')
-           ->select('id',
+           ->select('users.id',
             'student_id',
             'department_id',
              DB::raw('CONCAT(users.last_name, ", ", users.first_name, " ", COALESCE(users.middle_name,"")) AS full_name'),

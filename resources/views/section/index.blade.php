@@ -1,13 +1,13 @@
 @extends('layouts.base')
-@section('title', 'Department')
+@section('title', 'Section')
 
 @section('content')
 
    <!-- Content Header (Page header) -->
     <section class="content-header no-print">
       <h1>
-        Department
-        <small>manage your departments</small>
+        Section
+        <small>manage your sections</small>
       </h1>
     </section>
 
@@ -17,23 +17,24 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Department List</h3>
+              <h3 class="box-title">Section List</h3>
               <div class="box-tools">
                 <div class="btn-group">
-                <a href="#" class="btn btn-block btn-primary modal_button" data-href="{{ action('DepartmentController@create') }} "><i class="fa fa-plus"></i> Add Department</a>
+                <a href="#" class="btn btn-block btn-primary modal_button" data-href="{{ action('SectionController@create') }} "><i class="fa fa-plus"></i> Add Section</a>
               </div>
             </div>
             </div> <!-- /.box-header -->
 
              <div class="box-body">
               <div class="table-responsive">
-              <table id="departments-table" class="table table-bordered table-striped datatable">
+              <table id="sections-table" class="table table-bordered table-striped datatable">
                 <thead>
                 <tr>
                   <th class="text-center">#</th>
+                  <th class="text-center">Department</th>
+                  <th class="text-center">Course</th>
                   <th class="text-center">Name</th>
                   <th class="text-center">Total Students</th>
-                  <th class="text-center">Total Faculty</th>
                   <th class="text-center">Action</th>
                 </tr>
                 </thead>
@@ -58,22 +59,23 @@
 @section('javascript')
 <script type="text/javascript">
  $( document ).ready(function() {
-  var department_table = $('#departments-table').DataTable({
+  var sections_table = $('#sections-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ route('department.index') }}',
+        ajax: '{{ route('section.index') }}',
         columns: [
             { data: 'id', name: 'id' },
+            { data: 'department', name: 'course.department.name' },
+            { data: 'course', name: 'course.name' },
             { data: 'name', name: 'name' },
-            { data: 'no_of_students', name: 'no_of_students' },
-            { data: 'no_of_faculty', name: 'no_of_faculty' },
-            { data: 'action', name: 'action' },
+            { data: 'no_of_students', name: 'no_of_students'},
+            { data: 'action', name: 'action', orderable : false},
         ]
     });
   $('[data-toggle="tooltip"]').tooltip();
 
   $('.view_modal').on('hidden.bs.modal', function () {
-    department_table.ajax.reload();
+    sections_table.ajax.reload();
   });
 });
  </script>

@@ -21,8 +21,8 @@ class CourseController extends Controller
     {
         if ( request()->ajax()) {
            $course = Course::with('department')
-                            ->select('id','name', 'department_id')
-                            ->where('is_deleted', false);
+                            ->select('courses.id','courses.name', 'courses.department_id')
+                            ->where('courses.is_deleted', false);
             return Datatables::eloquent($course)
                 ->addColumn('no_of_students', function(Course $course) {
                             return $course->students->count();
@@ -59,7 +59,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), ['name' => ['required', 'unique:courses,name'],
+        $validator = Validator::make($request->all(), ['name' => ['required'],
                                                         'department_id' => ['required', 'exists:department,id']]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()]);
@@ -113,7 +113,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        $validator = Validator::make($request->all(), ['name' => ['required', 'unique:courses,name,' . $course->id],
+        $validator = Validator::make($request->all(), ['name' => ['required',
                                                         'department_id' => ['required', 'exists:department,id']]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()]);

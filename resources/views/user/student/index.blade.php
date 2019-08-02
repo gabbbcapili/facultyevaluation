@@ -69,7 +69,7 @@
             { data: 'email', name: 'email' },
             { data: 'gender', name: 'gender' },
             { data: 'contact_number', name: 'contact_number' },
-            { data: 'action', name: 'action' },
+            { data: 'action', name: 'action', orderable : false},
         ]
     });
   $('[data-toggle="tooltip"]').tooltip();

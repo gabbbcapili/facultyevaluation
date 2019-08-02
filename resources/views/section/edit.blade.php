@@ -1,19 +1,30 @@
 <div class="modal-dialog modal-xl" role="document">
-	<form action="{{ action('DepartmentController@update', $department->id) }}" method="POST" class="form" enctype='multipart/form-data'>
+	<form action="{{ action('SectionController@update', $section->id) }}" method="POST" class="form" enctype='multipart/form-data'>
     @method('PUT')
 		@csrf
   <div class="modal-content">
   	<div class="modal-header">
 		<button type="button" class="close no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" id="modalTitle">Edit Department
+		<h4 class="modal-title" id="modalTitle">Edit Section
 		</h4>
 	</div>
 	<div class="modal-body" >
 	  <div class="row">
+	  	<div class="col-sm-6">
+	    	<div class="form-group">
+	    		<label for="phone_no">Course:</label>
+	    		<select class="form-control" name="course_id">
+	             <option hidden selected></option>
+	             @foreach($courses as $course)
+	                <option value="{{ $course->id }}" {{ $course->id == $section->course_id ? 'selected' : '' }}>{{ $course->name }}</option>
+	             @endforeach
+	           </select>
+	    	</div>
+	    </div>
 	    <div class="col-sm-6">
 	    	<div class="form-group">
-	    		<label for="phone_no">Department Name:</label>
-	    		<input type="text" name="name" class="form-control" value="{{ $department->name }}">
+	    		<label for="phone_no">Section Name:</label>
+	    		<input type="text" name="name" class="form-control" value="{{ $section->name }}">
 	    	</div>
 	    </div>
 	  </div>

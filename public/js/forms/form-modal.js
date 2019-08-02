@@ -8,6 +8,7 @@ $(".form").submit(function(e) {
       processData: false,
       contentType: false,
       success: function(result){
+        console.log(result);
         if(result.success == true){
           toastr.success(result.msg);
           $('.view_modal').modal('toggle');

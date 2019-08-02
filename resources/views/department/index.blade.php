@@ -67,7 +67,7 @@
             { data: 'name', name: 'name' },
             { data: 'no_of_students', name: 'no_of_students' },
             { data: 'no_of_faculty', name: 'no_of_faculty' },
-            { data: 'action', name: 'action' },
+            { data: 'action', name: 'action', orderable : false},
         ]
     });
   $('[data-toggle="tooltip"]').tooltip();
