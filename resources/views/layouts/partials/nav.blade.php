@@ -23,6 +23,21 @@
 
           </ul>
         </li>  
+
+        <!-- Course -->
+        
+       <li class="treeview {{ $request->segment(1) == 'course' ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-university"></i> <span>Courses</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ $request->segment(1) == 'course' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('CourseController@index') }}"><i class="fa fa-list"></i>List Courses</a></li>
+
+          </ul>
+        </li>  
         
           <!-- student -->
         <li class="treeview {{ $request->segment(1) == 'student' ? 'active' : '' }}">

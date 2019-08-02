@@ -46,6 +46,12 @@ Route::get('contacts/delete/{contact}', 'ContactController@delete')->middleware(
 //department
 Route::get('department/delete/{department}', 'DepartmentController@delete')->middleware('admin');
 
+//course
+Route::get('course/delete/{course}', 'CourseController@delete')->middleware('admin');
+
+//section
+Route::get('section/delete/{section}', 'SectionController@delete')->middleware('admin');
+
 // resource contorller
 Route::resource('student', 'StudentController', ['parameters' => [
     'student' => 'user'
@@ -56,6 +62,8 @@ Route::resource('faculty', 'FacultyController', ['parameters' => [
 Route::resource('contacts', 'ContactController')->middleware('admin');
 Route::resource('sms', 'SmsController')->middleware('admin');
 Route::resource('department', 'DepartmentController')->middleware('admin');
+Route::resource('course', 'CourseController')->middleware('admin');
+Route::resource('section', 'SectionController')->middleware('admin');
 
 Route::put('test', function(){
 	return 'asdasdsa';

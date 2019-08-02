@@ -21,7 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->unsignedInteger('department_id')->nullable();
-            $table->foreign('department_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
+            $table->unsignedInteger('course_id')->nullable();
+            // $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->unsignedInteger('section_id')->nullable();
+            // $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
             $table->string('username')->unique();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
