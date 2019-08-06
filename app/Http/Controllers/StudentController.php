@@ -23,17 +23,20 @@ class StudentController extends Controller
     {
         if ( request()->ajax()) {
            $users = User::
-            with('department')
+            with('department', 'course', 'section')
            ->select('users.id',
             'student_id',
             'department_id',
+            'course_id',
+            'section_id',
              DB::raw('CONCAT(users.last_name, ", ", users.first_name, " ", COALESCE(users.middle_name,"")) AS full_name'),
             'email', 
             'gender',
             'username',
             'contact_number')
            ->where('active', true)
-           ->where('role', 'student');
+           ->where('role', 'student')
+           ->orderBy('updated_at', 'desc');
             return Datatables::eloquent($users)
             ->filterColumn('full_name', function($query, $keyword) {
                     $sql = "CONCAT(users.last_name, ', ', users.first_name, ' ', COALESCE(users.middle_name, ' '))  like ?";
@@ -46,6 +49,12 @@ class StudentController extends Controller
                         })
             ->addColumn('department', function(User $user) {
                            return $user->department ? $user->department->name : '--';
+                        })
+            ->addColumn('course', function(User $user) {
+                           return $user->course ? $user->course->name : '--';
+                        })
+            ->addColumn('section', function(User $user) {
+                           return $user->section ? $user->section->name : '--';
                         })
             ->make(true);
         }
@@ -61,7 +70,6 @@ class StudentController extends Controller
     {
         $departments = Department::all()->where('is_deleted', false);
         $civil_statuses = User::getCivilStatus();
-        
         return view('user.student.create', compact('departments', 'civil_statuses'));
     }
 
@@ -77,10 +85,10 @@ class StudentController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()]);
-            }
+        }
         try {
             DB::beginTransaction();
-            $data = $request->only(['department_id', 'student_id' , 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender']);
+            $data = $request->only(['department_id', 'student_id' , 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender', 'course_id', 'section_id']);
             $data['username'] = (int)$request->input('student_id');
             $data['password'] = Hash::make(Utilities::format_date($request->input('bday'), 'mdy'));
             $data['role'] = 'student';
@@ -139,7 +147,8 @@ class StudentController extends Controller
             }
         try {
             DB::beginTransaction();
-            $data = $request->only(['department_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender']);
+            $data = $request->only(['department_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender', 'course_id', 'section_id']);
+            $user->touch();
             $user = $user->update($data);
             DB::commit();
             $output = ['success' => 1,
@@ -171,16 +180,21 @@ class StudentController extends Controller
         if ($request->hasFile('file')) {
             try {
                 $department_id = $request->input('department_id');
+                $course_id = $request->input('course_id');
+                $section_id = $request->input('section_id');
                 $csv = array_map('str_getcsv', file($request->file));
                 array_shift($csv);
+                $row = 2;
+                $errors = [];
                 foreach($csv as $data){
-                    // dd($loop->iteration);
                     $username = $data[0];
                     $password = Hash::make(Utilities::format_date($data[6], 'mdy'));
                     $data = [
                         'username' => $username,
                         'password' => $password,
                         'department_id' => $department_id,
+                        'course_id' => $course_id,
+                        'section_id' => $section_id,
                         'student_id' => $data[0],
                         'first_name' => $data[1],
                         'middle_name' => $data[2],
@@ -191,10 +205,17 @@ class StudentController extends Controller
                         'gender' => $data[7],
                         'civil_status' => 'Single',
                     ];
+                    $validator = Validator::make($data, Validation::userValidator());
+                    if ($validator->fails()) {
+                        $errors[$row] = $validator->errors();
+                        continue;
+                    }
+                    $row += 1;
                     User::create($data);
                 }   
                 $output = ['success' => 1,
-                        'msg' => 'Successfully imported students.'
+                            'errors' => $errors,
+                        'msg' => $errors ? 'Please check for errors. Other data successfully imported.' : 'Successfully imported students.'
                     ];
             } catch (\Exception $e) {
             \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());

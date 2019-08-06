@@ -7,7 +7,7 @@
 		<h4 class="modal-title" id="modalTitle">Add Course
 		</h4>
 	</div>
-	<div class="modal-body" >
+	<div class="modal-body">
 	  <div class="row">
 	  	<div class="col-sm-6">
 	    	<div class="form-group">

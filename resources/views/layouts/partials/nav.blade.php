@@ -71,13 +71,13 @@
           <!-- faculty -->
         <li class="treeview {{ $request->segment(1) == 'faculty' ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-users"></i> <span>Faculty</span>
+            <i class="fa fa-users"></i> <span>Employee</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ $request->segment(1) == 'faculty' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('FacultyController@index') }}"><i class="fa fa-list"></i> List Faculties </a></li>
+            <li class="{{ $request->segment(1) == 'faculty' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('FacultyController@index') }}"><i class="fa fa-list"></i> List Employees </a></li>
           </ul>
         </li>     
 

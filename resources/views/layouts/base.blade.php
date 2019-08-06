@@ -26,11 +26,11 @@
 
     <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+      <!-- select2 -->
+  <link rel="stylesheet" href="{{ asset('bower_components/select2/select2.css') }}">
   <!-- custom css -->
   <link rel="stylesheet" href="{{ asset('app/app.css') }}">
 
-      <!-- selectpicker -->
-  <link href="{{ asset('plugins/selectpicker/selectpicker.css')}}" rel="stylesheet">
 @yield('css')
 </head>
 <body class="hold-transition skin-red sidebar-mini">
@@ -145,12 +145,12 @@
 <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- Toastr -->
  <script src="{{ asset('plugins/toastr/toastr.min.js')}} "></script>
- <!-- selectpicker -->
- <script src="{{ asset('plugins/selectpicker/selectpicker.js')}} "></script>
  <!-- PACE -->
 <script src="{{ asset('bower_components/PACE/pace.min.js') }}"></script>
  <!-- Swal -->
 <script src="{{ asset('plugins/swal/swal.js') }}"></script>
+<!-- select2 -->
+<script src="{{ asset('bower_components/select2/select2.js') }}"></script>
  <!-- Custom js -->
 <script src="{{ asset('app/app.js')}} "></script>
   @yield('javascript')

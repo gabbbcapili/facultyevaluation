@@ -6,6 +6,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
+use App\Department;
+use App\Course;
+use App\Section;
 
 class User extends Authenticatable
 {
@@ -17,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'department_id', 'faculty_id', 'student_id' ,  'first_name', 'middle_name', 'last_name', 'username' , 'bday', 'civil_status', 'contact_number' , 'email', 'password' , 'role', 'gender', 'active'
+        'department_id', 'faculty_id', 'student_id' ,  'first_name', 'middle_name', 'last_name', 'username' , 'bday', 'civil_status', 'contact_number' , 'email', 'password' , 'role', 'gender', 'active', 'section_id', 'course_id'
     ];
 
     /**
@@ -56,9 +59,16 @@ class User extends Authenticatable
     }
 
     public function department(){
-        return $this->belongsTo(\App\Department::class, 'department_id', 'id');
+        return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
+    public function course(){
+        return $this->belongsTo(Course::class, 'course_id', 'id');
+    }
+
+    public function section(){
+        return $this->belongsTo(Section::class, 'section_id', 'id');
+    }
     public static function studentCsvHeader(){
         return [
             'Student ID', 'First Name', 'Middle Name', 'Last Name', 'Email', 'Contact Number', 'Birth Date', 'Gender'

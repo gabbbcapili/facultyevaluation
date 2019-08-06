@@ -23,6 +23,19 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
+           <label>Role:</label>
+           <select class="form-control" disabled>
+             <option hidden selected></option>
+             <option value="faculty" {{ $user->role == 'faculty' ? 'selected' : '' }}>Faculty</option>
+             <option value="secretary" {{ $user->role == 'secretary' ? 'selected' : '' }}>Secretary</option>
+             <option value="dean" {{ $user->role == 'dean' ? 'selected' : '' }}>Dean</option>
+           </select>
+          </div>
+        </div>
+      </div>
+        <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
             <label>Faculty ID:</label>
             <input type="text" class="form-control" value="{{ $user->faculty_id }}" disabled>
           </div>

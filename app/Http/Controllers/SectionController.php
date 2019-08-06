@@ -51,8 +51,8 @@ class SectionController extends Controller
      */
     public function create()
     {
-        $courses = Course::all()->where('is_deleted', false);
-        return view('section.create', compact('courses'));
+        $departments = Department::all()->where('is_deleted', false);
+        return view('section.create', compact('departments'));
     }
 
     /**
@@ -104,8 +104,8 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-        $courses = Course::all()->where('is_deleted', false);
-        return view('section.edit', compact('courses', 'section'));
+        $departments = Department::all()->where('is_deleted', false);
+        return view('section.edit', compact('section', 'departments'));
     }
 
     /**

@@ -17,6 +17,9 @@ class Department extends Model
     	return$this->hasMany(User::class, 'department_id')->where('role', 'student')->where('active', true);
     }
     public function faculty(){
-    	return$this->hasMany(User::class, 'department_id')->where('role', 'faculty')->where('active', true);
+    	return $this->hasMany(User::class, 'department_id')->where('role', 'faculty')->where('active', true);
+    }
+    public function courses(){
+    	return $this->hasMany(Course::class, 'department_id');
     }
 }

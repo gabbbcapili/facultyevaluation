@@ -22,6 +22,30 @@
           </div>
         </div>
         <div class="col-sm-4">
+          <div class="form-group" id="fg_courses">
+            <label for="course_id">Course:</label>
+            <select class="form-control" name="course_id">
+               <option hidden selected></option>
+               @foreach($user->department->courses as $course)
+                <option value="{{ $course->id }}" {{ $user->course_id == $course->id ? 'selected' : '' }}>{{ $course->name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" id="fg_sections">
+            <label for="section_id">Section:</label>
+            <select class="form-control" name="section_id">
+                 <option hidden selected></option>
+                 @foreach($user->course->sections as $section)
+                <option value="{{ $section->id }}" {{ $user->section_id == $section->id ? 'selected' : '' }}>{{ $section->name }}</option>
+              @endforeach
+               </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
           <div class="form-group">
             <label>Student ID:</label>
             <input type="text" class="form-control" value="{{ $user->student_id }}" disabled>
@@ -98,5 +122,6 @@
   </div>
   </form>
 </div>
-
+<script src="{{ asset('js/forms/load-courses.js') }}"></script>
+<script src="{{ asset('js/forms/load-sections.js') }}"></script>
 <script src="{{ asset('js/forms/form-modal.js') }}"></script>

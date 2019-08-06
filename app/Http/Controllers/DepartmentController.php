@@ -166,4 +166,9 @@ class DepartmentController extends Controller
         $title = 'department ' . $department->name;
        return view('layouts.delete', compact('action' , 'title'));
     }
+
+    public function getCourses(Department $department){
+        $courses = $department->courses;
+        return view('department.courses', compact('courses'));
+    }
 }

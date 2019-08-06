@@ -12,10 +12,21 @@
 	  <div class="row">
 	  	<div class="col-sm-6">
 	    	<div class="form-group">
-	    		<label for="phone_no">Course:</label>
+	    		<label for="phone_no">Department:</label>
+	    		<select class="form-control" name="department_id">
+	             <option hidden selected></option>
+	             @foreach($departments as $department)
+	                <option value="{{ $department->id }}" {{ $department->id == $section->course->department_id ? 'selected' : '' }}>{{ $department->name }}</option>
+	             @endforeach
+	           </select>
+	    	</div>
+	    </div>
+	  	<div class="col-sm-6">
+	    	<div class="form-group" id="fg_courses">
+	    		<label for="course_id">Course:</label>
 	    		<select class="form-control" name="course_id">
 	             <option hidden selected></option>
-	             @foreach($courses as $course)
+	             @foreach($section->course->department->courses as $course)
 	                <option value="{{ $course->id }}" {{ $course->id == $section->course_id ? 'selected' : '' }}>{{ $course->name }}</option>
 	             @endforeach
 	           </select>
@@ -23,7 +34,7 @@
 	    </div>
 	    <div class="col-sm-6">
 	    	<div class="form-group">
-	    		<label for="phone_no">Section Name:</label>
+	    		<label for="name">Section Name:</label>
 	    		<input type="text" name="name" class="form-control" value="{{ $section->name }}">
 	    	</div>
 	    </div>
@@ -37,5 +48,5 @@
   </div>
   </form>
 </div>
-
+<script src="{{ asset('js/forms/load-courses.js') }}"></script>
 <script src="{{ asset('js/forms/form-modal.js') }}"></script>

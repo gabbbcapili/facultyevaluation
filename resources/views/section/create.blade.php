@@ -11,12 +11,20 @@
 	  <div class="row">
 	  	<div class="col-sm-6">
 	    	<div class="form-group">
+	    		<label for="course_id">Department:</label>
+	    		<select class="form-control" name="department_id">
+	             <option hidden selected></option>
+	             @foreach($departments as $department)
+	                <option value="{{ $department->id }}">{{ $department->name }}</option>
+	             @endforeach
+	           </select>
+	    	</div>
+	    </div>
+	  	<div class="col-sm-6">
+	    	<div class="form-group" id="fg_courses">
 	    		<label for="course_id">Course:</label>
 	    		<select class="form-control" name="course_id">
 	             <option hidden selected></option>
-	             @foreach($courses as $course)
-	                <option value="{{ $course->id }}">{{ $course->name }}</option>
-	             @endforeach
 	           </select>
 	    	</div>
 	    </div>
@@ -36,5 +44,5 @@
   </div>
   </form>
 </div>
-
+<script src="{{ asset('js/forms/load-courses.js') }}"></script>
 <script src="{{ asset('js/forms/form-modal.js') }}"></script>

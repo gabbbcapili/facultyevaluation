@@ -31,8 +31,9 @@
                 <tr>
                   <th class="text-center">Student ID</th>
                   <th class="text-center">Department</th>
+                  <th class="text-center">Course</th>
+                  <th class="text-center">Section</th>
                   <th class="text-center">Full name</th>
-                  <th class="text-center">Username</th>
                   <th class="text-center">Email</th>
                   <th class="text-center">Gender</th>
                   <th class="text-center">Contact Number</th>
@@ -64,8 +65,9 @@
         columns: [
             { data: 'student_id', name: 'student_id' },
             { data: 'department', name: 'department.name' },
+            { data: 'course', name: 'course.name' },
+            { data: 'section', name: 'section.name' },
             { data: 'full_name', name: 'full_name' },
-            { data: 'username', name: 'username' },
             { data: 'email', name: 'email' },
             { data: 'gender', name: 'gender' },
             { data: 'contact_number', name: 'contact_number' },

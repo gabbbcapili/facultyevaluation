@@ -33,7 +33,8 @@ class FacultyController extends Controller
             'username',
             'contact_number')
            ->where('active', true)
-           ->where('role', 'faculty');
+           ->where('role', 'faculty')
+           ->orderBy('updated_at', 'desc');;
             return Datatables::eloquent($users)
             ->filterColumn('full_name', function($query, $keyword) {
                     $sql = "CONCAT(users.last_name, ', ', users.first_name, ' ', COALESCE(users.middle_name, ' '))  like ?";
@@ -80,7 +81,7 @@ class FacultyController extends Controller
             }
         try {
             DB::beginTransaction();
-            $data = $request->only(['department_id', 'faculty_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender']);
+            $data = $request->only(['department_id', 'faculty_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender', 'role']);
             $data['username'] = (int)$request->input('faculty_id');
             $data['password'] = Hash::make(Utilities::format_date($request->input('bday'), 'mdy'));
             $data['role'] = 'faculty';
@@ -140,6 +141,7 @@ class FacultyController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->only(['department_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender']);
+            $user->touch();
             $user = $user->update($data);
             DB::commit();
             $output = ['success' => 1,

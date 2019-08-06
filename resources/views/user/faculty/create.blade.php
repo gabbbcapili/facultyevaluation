@@ -4,14 +4,14 @@
   <div class="modal-content">
   	<div class="modal-header">
 		<button type="button" class="close no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" id="modalTitle">Add Faculty
+		<h4 class="modal-title" id="modalTitle">Add Employee
 		</h4>
 	</div>
 	<div class="modal-body">
     <div class="row">
       <div class="col-sm-4">
           <div class="form-group">
-            <label>Department:</label>
+           <label>Department:</label>
            <select class="form-control" name="department_id">
              <option hidden selected></option>
              @foreach($departments as $department)
@@ -22,7 +22,20 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label>Faculty ID:</label>
+           <label>Role:</label>
+           <select class="form-control" name="role">
+             <option hidden selected></option>
+             <option value="faculty">Faculty</option>
+             <option value="secretary">Secretary</option>
+             <option value="dean">Dean</option>
+           </select>
+          </div>
+        </div>
+      </div>
+        <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label>Employee ID:</label>
             <input type="text" name="faculty_id" class="form-control">
           </div>
         </div>

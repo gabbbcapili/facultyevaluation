@@ -10,8 +10,11 @@ class Validation extends Model
         // unique:table,column,except,idColumn
     	return [
     		'department_id' => ['required'],
-            'student_id' => ['sometimes', 'int' , 'required', 'unique:users,student_id' , 'unique:users,faculty_id'],
-    		'faculty_id' => ['sometimes', 'int' , 'required', 'unique:users,student_id' , 'unique:users,faculty_id'],
+            'course_id' => [ 'sometimes','required'],
+            'section_id' => [ 'sometimes','required'],
+            'student_id' => ['sometimes', 'required', 'int' ,  'unique:users,student_id' , 'unique:users,faculty_id'],
+    		'faculty_id' => ['sometimes', 'required', 'int' ,  'unique:users,student_id' , 'unique:users,faculty_id'],
+            'role' => ['sometimes', 'required'],
     		'first_name' => ['required'],
     		'last_name' => ['required'],
             'email' => ['required' , 'email', 'unique:users,email,' . $id],
@@ -25,6 +28,8 @@ class Validation extends Model
     public static function userCsvValidator(){
         return [
             'department_id' => ['required'],
+            'course_id' => ['required'],
+            'section_id' => ['required'],
             'file' => ['required', 'mimes:csv,txt']
         ];
     }

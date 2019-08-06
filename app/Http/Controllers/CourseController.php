@@ -113,7 +113,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        $validator = Validator::make($request->all(), ['name' => ['required',
+        $validator = Validator::make($request->all(), ['name' => ['required'],
                                                         'department_id' => ['required', 'exists:department,id']]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()]);
@@ -164,6 +164,11 @@ class CourseController extends Controller
         $action = action('CourseController@destroy', $course->id);
         $title = 'course ' . $course->name;
        return view('layouts.delete', compact('action' , 'title'));
+    }
+    
+    public function getSections(Course $course){
+        $sections = $course->sections;
+        return view('course.sections', compact('sections'));
     }
 
 }

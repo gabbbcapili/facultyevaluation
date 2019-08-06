@@ -21,6 +21,24 @@
           </div>
         </div>
         <div class="col-sm-4">
+          <div class="form-group" id="fg_courses">
+            <label for="course_id">Course:</label>
+            <select class="form-control" name="course_id">
+                 <option hidden selected></option>
+               </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group" id="fg_sections">
+            <label for="section_id">Section:</label>
+            <select class="form-control" name="section_id">
+                 <option hidden selected></option>
+               </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
           <div class="form-group">
             <label>Student ID:</label>
             <input type="text" name="student_id" class="form-control">
@@ -97,5 +115,6 @@
   </div>
  </form>
 </div>
-
+<script src="{{ asset('js/forms/load-courses.js') }}"></script>
+<script src="{{ asset('js/forms/load-sections.js') }}"></script>
 <script src="{{ asset('js/forms/form-modal.js') }}"></script>

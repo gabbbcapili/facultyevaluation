@@ -46,6 +46,24 @@
                      </div>
                    </div>
                    <div class="col-sm-4">
+                    <div class="form-group" id="fg_courses">
+                      <label for="course_id">Course:</label>
+                      <select class="form-control" name="course_id">
+                           <option hidden selected></option>
+                         </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group" id="fg_sections">
+                      <label for="section_id">Section:</label>
+                      <select class="form-control" name="section_id">
+                           <option hidden selected></option>
+                         </select>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="row">
+                   <div class="col-sm-4">
                      <div class="form-group">
                        <label>Upload File:</label>
                        <input type="file" name="file" class="form-control">
@@ -71,38 +89,8 @@
 @endsection
 
 @section('javascript')
-<script type="text/javascript">
-  $(".form").submit(function(e) {
-  e.preventDefault();
-   $('.btn_save').prop('disabled', true);
-    $.ajax({
-      url : $(this).attr('action'),
-      type : 'POST',
-      data: new FormData(this),
-      processData: false,
-      contentType: false,
-      success: function(result){
-        if(result.success == true){
-          toastr.success(result.msg);
-          $('.form')[0].reset();
-        }else{
-          if(result.msg){
-            toastr.error(result.msg);
-          }
-           $('.error').remove();
-              $.each(result.error, function(index, val){
-              $('[name="'+ index +'"]').after('<label class="text-danger error">' + val + '</label>');
-              });
-        }
-        $('.btn_save').prop('disabled', false);
-         },
-        error: function(jqXhr, json, errorThrown){
-          console.log(jqXhr);
-          console.log(json);
-          console.log(errorThrown);
-          $('.btn_save').prop('disabled', false);
-        }
-    });
-});
-</script>
+
+<script src="{{ asset('js/forms/load-courses.js') }}"></script>
+<script src="{{ asset('js/forms/load-sections.js') }}"></script>
+<script src="{{ asset('js/forms/form-import.js') }}"></script>
 @endsection
