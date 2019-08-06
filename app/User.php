@@ -40,6 +40,14 @@ class User extends Authenticatable
         }
     }
 
+    public function isStudent(){
+        if ($this->role == 'student'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static function getCivilStatus(){
         return [
             'Single',

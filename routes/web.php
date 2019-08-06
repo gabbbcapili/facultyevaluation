@@ -66,6 +66,9 @@ Route::resource('department', 'DepartmentController')->middleware('admin');
 Route::resource('course', 'CourseController')->middleware('admin');
 Route::resource('section', 'SectionController')->middleware('admin');
 
+
+Route::resource('evaluation/list', 'EvaluationListController')->middleware('student');
+
 Route::put('test', function(){
 	return 'asdasdsa';
 });

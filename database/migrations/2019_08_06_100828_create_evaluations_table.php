@@ -15,6 +15,9 @@ class CreateEvaluationsTable extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->string('start_date');
+            $table->string('end_date');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\EvaluationList;
+use App\Evaluation;
 use Illuminate\Http\Request;
 
 class EvaluationListController extends Controller
@@ -22,9 +23,11 @@ class EvaluationListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $id = $request->input('evaluation_id');
+        $evaluation = Evaluation::findOrFail($id);
+        return view('evaluation_list.create', compact('evaluation'));
     }
 
     /**
