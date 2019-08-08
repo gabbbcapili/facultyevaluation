@@ -1,3 +1,4 @@
+@inject('request', 'Illuminate\Http\Request')
 <div class="modal-dialog modal-lg" role="document">
 	<form action="{{ action('StudentController@store') }}" method="POST" class="form" enctype='multipart/form-data'>
 		@csrf
@@ -9,6 +10,7 @@
 	</div>
 	<div class="modal-body">
     <div class="row">
+      @if($request->user()->isAdmin())
       <div class="col-sm-4">
           <div class="form-group">
             <label>Department:</label>
@@ -20,6 +22,9 @@
             </select>
           </div>
         </div>
+        @else
+          <input type="hidden" name="department_id" value="{{ $request->user()->department_id }}">
+        @endif
         <div class="col-sm-4">
           <div class="form-group" id="fg_courses">
             <label for="course_id">Course:</label>

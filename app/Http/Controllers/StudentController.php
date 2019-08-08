@@ -19,8 +19,9 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         if ( request()->ajax()) {
            $users = User::
             with('department', 'course', 'section')
@@ -37,6 +38,9 @@ class StudentController extends Controller
            ->where('active', true)
            ->where('role', 'student')
            ->orderBy('updated_at', 'desc');
+           if($request->user()->isAdmin() == false){
+                $users->where('department_id', $request->user()->department_id);
+           }
             return Datatables::eloquent($users)
             ->filterColumn('full_name', function($query, $keyword) {
                     $sql = "CONCAT(users.last_name, ', ', users.first_name, ' ', COALESCE(users.middle_name, ' '))  like ?";

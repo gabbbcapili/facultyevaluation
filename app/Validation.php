@@ -33,4 +33,28 @@ class Validation extends Model
             'file' => ['required', 'mimes:csv,txt']
         ];
     }
+
+    public static function evaluationValidator(){
+        return [
+            'evaluation_id' => ['required'],
+            'subject' => ['required'],
+            'semester' => ['required'],
+            'q1' => ['required'],
+            'q2' => ['required'],
+            'q3' => ['required'],
+            'q4' => ['required'],
+            'q5' => ['required'],
+            'q6' => ['required'],
+            'q7' => ['required'],
+            'q8' => ['required'],
+            'q9' => ['required'],
+            'q10' => ['required'],
+            'q11' => ['required'],
+            'q12' => ['required'],
+            'q13' => ['required'],
+            'q14' => ['required'],
+            'comments' => ['required'],
+        ];
+
+    }
 }

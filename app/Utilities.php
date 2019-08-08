@@ -11,6 +11,14 @@ class Utilities extends Model
 		return date_format(date_create($date), $format);
 	}
 
+	public static function viewButtonHref($action){
+		return'<a target="_blank" href="'. $action .'" data-toggle="tooltip" data-placement="top" title="View"" class="btn btn-primary btn-sm margin-r-10"><i class="fa fa-eye"></i>';
+	}
+
+	public static function viewButton($action){
+		return'<a href="#" data-toggle="tooltip" data-placement="top" title="View"" data-href="'. $action . '" class="btn btn-primary btn-sm margin-r-10 modal_button"><i class="fa fa-eye"></i>';
+	}
+
 	public static function editButton($action){
 		return'<a href="#" data-toggle="tooltip" data-placement="top" title="Edit"" data-href="'. $action . '" class="btn btn-primary btn-sm margin-r-10 modal_button"><i class="fa fa-edit"></i>';
 	}

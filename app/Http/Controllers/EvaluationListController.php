@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\EvaluationList;
 use App\Evaluation;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
+use Validator;
+use App\Utilities;
+use App\Validation;
 
 class EvaluationListController extends Controller
 {
@@ -15,7 +20,34 @@ class EvaluationListController extends Controller
      */
     public function index()
     {
-        //
+        if ( request()->ajax()) {
+           $evaluation = EvaluationList::select();
+            return Datatables::eloquent($evaluation)
+                ->addColumn('faculty', function(EvaluationList $evaluation) {
+                           return $evaluation->evaluation ? $evaluation->evaluation->faculty->getFullName() : '--';
+                        })
+                ->addColumn('totalCoursePlanning', function(EvaluationList $evaluation) {
+                           return $evaluation->totalCoursePlanning();
+                        })
+                ->addColumn('totalInstructionalDelivery', function(EvaluationList $evaluation) {
+                           return $evaluation->totalInstructionalDelivery();
+                        })
+                ->addColumn('totalAssessment', function(EvaluationList $evaluation) {
+                           return $evaluation->totalAssessment();
+                        })
+                ->addColumn('totalClassroomManagement', function(EvaluationList $evaluation) {
+                           return $evaluation->totalClassroomManagement();
+                        })
+                ->addColumn('totalPersonalityandPoise', function(EvaluationList $evaluation) {
+                           return $evaluation->totalPersonalityandPoise();
+                        })
+                ->addColumn('action', function(EvaluationList $evaluation) {
+                            $html = Utilities::viewButtonHref(action('EvaluationListController@show', [$evaluation->id]));
+                            return $html;
+                        })
+                ->make(true);
+        }
+        return view('evaluation_list.index');
     }
 
     /**
@@ -25,8 +57,9 @@ class EvaluationListController extends Controller
      */
     public function create(Request $request)
     {
-        $id = $request->input('evaluation_id');
+        $id = $request->input('e_id');
         $evaluation = Evaluation::findOrFail($id);
+        $evaluation->checkDate();
         return view('evaluation_list.create', compact('evaluation'));
     }
 
@@ -38,7 +71,30 @@ class EvaluationListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), Validation::evaluationValidator(), ['required' => 'This field is required.']);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors(), 'msg' => 'Please check for errors']);
+        }
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            $data['user_id'] = $request->user()->id;
+            EvaluationList::create($data);
+            DB::commit();
+            $request->session()->flash('status', 'Successfully submitted an Evaluation!');
+            $output = ['success' => 1,
+                        'msg' => 'Successfully submitted an Evaluation!'
+                    ];
+        } catch (\Exception $e) {
+            \Log::emergency("File:" . $e->getFile(). " Line:" . $e->getLine(). " Message:" . $e->getMessage());
+            $output = ['success' => 0,
+                        'msg' => env('APP_DEBUG') ? $e->getMessage() : 'Sorry something went wrong, please try again later.'
+                    ];
+             DB::rollBack();
+        }
+        return response()->json($output);
+
     }
 
     /**
@@ -47,9 +103,10 @@ class EvaluationListController extends Controller
      * @param  \App\EvaluationList  $evaluationList
      * @return \Illuminate\Http\Response
      */
-    public function show(EvaluationList $evaluationList)
-    {
-        //
+    public function show($evaluationList)
+    {  
+        $evaluationList = EvaluationList::findOrFail($evaluationList);
+        return view('evaluation_list.show', compact('evaluationList'));
     }
 
     /**

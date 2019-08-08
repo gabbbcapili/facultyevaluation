@@ -1,3 +1,4 @@
+@inject('request', 'Illuminate\Http\Request')
  <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li>
@@ -8,9 +9,23 @@
           </a>
         </li>
 
+        @if($request->user()->isStudent())
+          <!-- department -->
+       <li class="treeview {{ $request->segment(1) == 'list-evaluation'  ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-newspaper-o"></i> <span>Evaluations</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ $request->segment(1) == 'list-evaluation' ? 'active' : '' }}"><a href="{{ action('EvaluationListController@index') }}"><i class="fa fa-list"></i>My Evaluations</a></li>
+          </ul>
+        </li>  
+        @endif
 
+        @if($request->user()->isAdmin())
         <!-- department -->
-        
        <li class="treeview {{ $request->segment(1) == 'department' ? 'active' : '' }}">
           <a href="#">
             <i class="fa fa-university"></i> <span>Department</span>
@@ -28,32 +43,44 @@
         
        <li class="treeview {{ $request->segment(1) == 'course' ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-university"></i> <span>Courses</span>
+            <i class="fa fa-university"></i> <span>Course</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li class="{{ $request->segment(1) == 'course' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('CourseController@index') }}"><i class="fa fa-list"></i>List Courses</a></li>
-
           </ul>
         </li>  
 
-        <!-- Course -->
-        
+        <!-- section -->
        <li class="treeview {{ $request->segment(1) == 'section' ? 'active' : '' }}">
           <a href="#">
-            <i class="fa fa-university"></i> <span>Sections</span>
+            <i class="fa fa-university"></i> <span>Section</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li class="{{ $request->segment(1) == 'section' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('SectionController@index') }}"><i class="fa fa-list"></i>List Sections</a></li>
-
           </ul>
         </li>
-        
+        @endif
+
+        @if($request->user()->isEmployee())
+      <!-- department -->
+       <li class="treeview {{ $request->segment(1) == 'evaluation' ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-newspaper-o"></i> <span>Evaluation</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ $request->segment(1) == 'evaluation' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('EvaluationController@index') }}"><i class="fa fa-list"></i>List Evaluations</a></li>
+          </ul>
+        </li>  
+
           <!-- student -->
         <li class="treeview {{ $request->segment(1) == 'student' ? 'active' : '' }}">
           <a href="#">
@@ -79,28 +106,6 @@
           <ul class="treeview-menu">
             <li class="{{ $request->segment(1) == 'faculty' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('FacultyController@index') }}"><i class="fa fa-list"></i> List Employees </a></li>
           </ul>
-        </li>     
-
-    <!--     <li class="treeview {{ $request->segment(1) == 'contacts' && $request->segment(2) == '' ? 'active' : '' }}">
-          <a href="#">
-            <i class="fa fa-users"></i> <span>Contact</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ $request->segment(1) == 'contacts' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('ContactController@index') }}"><i class="fa fa-list"></i> List Contacts </a></li>
-          </ul>
-        </li>     
-        <li class="treeview {{ $request->segment(1) == 'sms' && $request->segment(2) == '' ? 'active' : '' }}">
-          <a href="#">
-            <i class="fa fa-envelope"></i> <span>SMS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ $request->segment(1) == 'sms' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('SmsController@index') }}"><i class="fa fa-list"></i> Send Sms </a></li>
-          </ul>
-        </li>   -->
+        </li>  
+        @endif   
       </ul>

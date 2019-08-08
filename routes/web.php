@@ -10,12 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// test routes
-
-
-
-
 Route::get('/', function () {
     return redirect('login');
 });
@@ -28,20 +22,15 @@ Route::get('user/changePassword', 'UserController@changePasswordForm')->middlewa
 Route::put('user/changePassword', 'UserController@changePasswordUpdate')->middleware('auth');
 Route::get('createStudents', 'UserController@createStudents')->middleware('admin');
 
-Route::get('student/import', 'StudentController@import')->middleware('admin');
-Route::get('student/getCSV', 'StudentController@getCSV')->middleware('admin');
-Route::post('student/import', 'StudentController@postImport')->middleware('admin');
+Route::get('student/import', 'StudentController@import')->middleware('employee');
+Route::get('student/getCSV', 'StudentController@getCSV')->middleware('employee');
+Route::post('student/import', 'StudentController@postImport')->middleware('employee');
 
 Route::delete('user/{user}', 'UserController@destroy')->middleware('admin');
 Route::get('user/delete/{user}', 'UserController@delete')->middleware('admin');
 
-
-Route::get('test', 'DepartmentController@test')->middleware('admin');
-
-Route::get('csv', 'ContactController@getCSV')->middleware('admin');
-Route::post('csv', 'ContactController@postCSV')->middleware('admin');
-
-Route::get('contacts/delete/{contact}', 'ContactController@delete')->middleware('admin');
+//evaluation
+Route::get('evaluation/delete/{evaluation}', 'EvaluationController@delete');
 
 //department
 Route::get('department/delete/{department}', 'DepartmentController@delete')->middleware('admin');
@@ -56,18 +45,18 @@ Route::get('section/delete/{section}', 'SectionController@delete')->middleware('
 // resource contorller
 Route::resource('student', 'StudentController', ['parameters' => [
     'student' => 'user'
-]])->middleware('admin')->except(['destroy']);
+]])->middleware('employee')->except(['destroy']);
 Route::resource('faculty', 'FacultyController', ['parameters' => [
     'faculty' => 'user'
-]])->middleware('admin')->except(['destroy']);
-Route::resource('contacts', 'ContactController')->middleware('admin');
-Route::resource('sms', 'SmsController')->middleware('admin');
+]])->middleware('employee')->except(['destroy']);
 Route::resource('department', 'DepartmentController')->middleware('admin');
 Route::resource('course', 'CourseController')->middleware('admin');
 Route::resource('section', 'SectionController')->middleware('admin');
 
+Route::get('evaluation/getEvaluationList/{evaluation}', 'EvaluationController@getEvaluationList')->name('getEvaluationList');
 
-Route::resource('evaluation/list', 'EvaluationListController')->middleware('student');
+Route::resource('evaluation', 'EvaluationController');
+Route::resource('list-evaluation', 'EvaluationListController');
 
 Route::put('test', function(){
 	return 'asdasdsa';

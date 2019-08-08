@@ -9,6 +9,8 @@ use Auth;
 use App\Department;
 use App\Course;
 use App\Section;
+use App\Evaluation;
+use App\EvaluationList;
 
 class User extends Authenticatable
 {
@@ -40,6 +42,28 @@ class User extends Authenticatable
         }
     }
 
+    public function isEmployee(){
+        if ($this->role == 'faculty'){
+            return true;
+        }else if($this->role == 'dean'){
+            return true;
+        }else if($this->role == 'secretary'){
+            return true;
+        }else if($this->role == 'admin'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function isSecretary(){
+        if ($this->role == 'student'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function isStudent(){
         if ($this->role == 'student'){
             return true;
@@ -63,7 +87,7 @@ class User extends Authenticatable
       }
 
     public function getFullName(){
-        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->middle_name) . ' ' . ucfirst($this->last_name);
     }
 
     public function department(){
@@ -81,5 +105,9 @@ class User extends Authenticatable
         return [
             'Student ID', 'First Name', 'Middle Name', 'Last Name', 'Email', 'Contact Number', 'Birth Date', 'Gender'
         ];
+    }
+
+    public function studentEvaluations(){
+        return $this->hasMany(EvaluationList::class, 'user_id');
     }
 }

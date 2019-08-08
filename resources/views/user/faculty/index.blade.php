@@ -29,9 +29,10 @@
               <table id="users-table" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th class="text-center">Faculty ID</th>
+                  <th class="text-center">Employee ID</th>
                   <th class="text-center">Department</th>
                   <th class="text-center">Full name</th>
+                   <th class="text-center">Role</th>
                   <th class="text-center">Username</th>
                   <th class="text-center">Email</th>
                   <th class="text-center">Gender</th>
@@ -65,6 +66,7 @@
             { data: 'faculty_id', name: 'faculty_id' },
             { data: 'department', name: 'department.name' },
             { data: 'full_name', name: 'full_name' },
+            { data: 'role', name: 'role' },
             { data: 'username', name: 'username' },
             { data: 'email', name: 'email' },
             { data: 'gender', name: 'gender' },

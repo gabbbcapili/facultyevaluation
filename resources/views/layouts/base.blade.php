@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{{ config('app.name') }} - @yield('title')</title>
-  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('dist/img/favicon.ico') }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('dist/img/icon.png') }}" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -99,7 +99,7 @@
         </div>
         <div class="pull-left info">
           <p>{{ $request->user()->first_name }} {{ $request->user()->last_name }}</p>
-          <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
+          <a href="#"><i class="fa fa-circle text-primary"></i>{{ $request->user()->isAdmin() ? 'Adminstrator' : $request->user()->department->name }}</a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -118,8 +118,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; 2018 {{ config('app.name', 'QuedyProject') }} 
-.</strong> All rights
+    <strong>Copyright &copy; 2019 {{ config('app.name', 'QuedyProject') }}.</strong> All rights
     reserved.
   </footer>
 </div>
@@ -147,6 +146,8 @@
  <script src="{{ asset('plugins/toastr/toastr.min.js')}} "></script>
  <!-- PACE -->
 <script src="{{ asset('bower_components/PACE/pace.min.js') }}"></script>
+<!-- PrintThis -->
+<script src="{{ asset('plugins/printThis/printThis.js') }}"></script>
  <!-- Swal -->
 <script src="{{ asset('plugins/swal/swal.js') }}"></script>
 <!-- select2 -->

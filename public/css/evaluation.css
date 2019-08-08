@@ -1,0 +1,28 @@
+.title-centered{
+		font-family: Times New Roman;
+		font-size: 20px;
+	}
+  .times{
+    font-family: Times New Roman;
+    font-size: 20px;
+  }
+	.border{
+		border:1px solid black;
+		padding:4px;
+	}
+  .margin-r-20{
+    margin-right: 20px;
+  }
+  .margin-l-20{
+    margin-left: 20px;
+  }
+  .margin-r-5{
+    margin-right: 5px;
+  }
+  .form-group{
+    text-align:center;
+  }
+
+  .left{
+    float:left;
+  }

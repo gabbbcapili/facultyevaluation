@@ -14,6 +14,6 @@ class CoursesTableSeeder extends Seeder
     {
         Course::create(['department_id' => 1, 'name' => 'Information Technology']);
         Course::create(['department_id' => 1, 'name' => 'Computer Science']);
-        Course::create(['department_id' => 1, 'name' => 'Computer Engineering']);
+        Course::create(['department_id' => 2, 'name' => 'Computer Engineering']);
     }
 }

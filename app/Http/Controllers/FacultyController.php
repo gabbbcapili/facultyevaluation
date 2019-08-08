@@ -19,7 +19,7 @@ class FacultyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if ( request()->ajax()) {
            $users = User::
@@ -31,10 +31,14 @@ class FacultyController extends Controller
             'email', 
             'gender',
             'username',
-            'contact_number')
+            'contact_number',
+            'role')
            ->where('active', true)
-           ->where('role', 'faculty')
-           ->orderBy('updated_at', 'desc');;
+           ->where('role', '!=', 'student')
+           ->orderBy('updated_at', 'desc');
+           if($request->user()->isAdmin() == false){
+                $users->where('department_id', $request->user()->department_id);
+           }
             return Datatables::eloquent($users)
             ->filterColumn('full_name', function($query, $keyword) {
                     $sql = "CONCAT(users.last_name, ', ', users.first_name, ' ', COALESCE(users.middle_name, ' '))  like ?";
@@ -84,7 +88,6 @@ class FacultyController extends Controller
             $data = $request->only(['department_id', 'faculty_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender', 'role']);
             $data['username'] = (int)$request->input('faculty_id');
             $data['password'] = Hash::make(Utilities::format_date($request->input('bday'), 'mdy'));
-            $data['role'] = 'faculty';
             $user = User::create($data);
             DB::commit();
             $output = ['success' => 1,
