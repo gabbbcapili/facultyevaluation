@@ -34,11 +34,11 @@ Route::get('evaluation/delete/{evaluation}', 'EvaluationController@delete');
 
 //department
 Route::get('department/delete/{department}', 'DepartmentController@delete')->middleware('admin');
-Route::get('department/getCourses/{department}', 'DepartmentController@getCourses')->middleware('admin');
+Route::get('department/getCourses/{department}', 'DepartmentController@getCourses')->middleware('employee');
 
 //course
 Route::get('course/delete/{course}', 'CourseController@delete')->middleware('admin');
-Route::get('course/getSections/{course}', 'CourseController@getSections')->middleware('admin');
+Route::get('course/getSections/{course}', 'CourseController@getSections')->middleware('employee');
 //section
 Route::get('section/delete/{section}', 'SectionController@delete')->middleware('admin');
 

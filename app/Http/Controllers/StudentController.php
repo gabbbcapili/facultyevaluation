@@ -7,6 +7,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Department;
+use App\Course;
 use App\Validation;
 use Validator;
 use App\Utilities;
@@ -74,7 +75,8 @@ class StudentController extends Controller
     {
         $departments = Department::all()->where('is_deleted', false);
         $civil_statuses = User::getCivilStatus();
-        return view('user.student.create', compact('departments', 'civil_statuses'));
+        $courses = Course::where('department_id', request()->user()->department_id)->where('is_deleted', false)->get();
+        return view('user.student.create', compact('departments', 'civil_statuses', 'courses'));
     }
 
     /**
@@ -171,7 +173,8 @@ class StudentController extends Controller
     public function import(){
         $departments = Department::all()->where('is_deleted', false);
         $headers = User::studentCsvHeader();
-        return view('user.student.import', compact('departments', 'headers'));
+        $courses = Course::where('department_id', request()->user()->department_id)->where('is_deleted', false)->get();
+        return view('user.student.import', compact('departments', 'headers', 'courses'));
     }
 
     public function postImport(Request $request){

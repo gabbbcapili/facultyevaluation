@@ -30,6 +30,11 @@
             <label for="course_id">Course:</label>
             <select class="form-control" name="course_id">
                  <option hidden selected></option>
+                 @if($request->user()->isAdmin() == false)
+                  @foreach($courses as $course)
+                     <option value="{{ $course->id }}">{{ $course->name }}</option>
+                  @endforeach
+                 @endif
                </select>
           </div>
         </div>

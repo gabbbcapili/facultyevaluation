@@ -167,7 +167,7 @@ class CourseController extends Controller
     }
     
     public function getSections(Course $course){
-        $sections = $course->sections;
+        $sections = $course->sections->where('is_deleted', false);
         return view('course.sections', compact('sections'));
     }
 

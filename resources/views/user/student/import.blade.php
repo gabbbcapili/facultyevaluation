@@ -1,3 +1,4 @@
+@inject('request', 'Illuminate\Http\Request')
 @extends('layouts.base')
 @section('title', 'Students')
 
@@ -34,6 +35,7 @@
                <form action="{{ action('StudentController@postImport') }}" method="POST" class="form" enctype='multipart/form-data'>
                   @csrf
                  <div class="row">
+                   @if($request->user()->isAdmin())
                    <div class="col-sm-4">
                      <div class="form-group">
                        <label>Department:</label>
@@ -45,11 +47,17 @@
                        </select>
                      </div>
                    </div>
+                  @else
+                    <input type="hidden" name="department_id" value="{{ $request->user()->department_id }}">
+                  @endif
                    <div class="col-sm-4">
                     <div class="form-group" id="fg_courses">
                       <label for="course_id">Course:</label>
                       <select class="form-control" name="course_id">
                            <option hidden selected></option>
+                           @foreach($courses as $course)
+                             <option value="{{ $course->id }}">{{ $course->name }}</option>
+                          @endforeach
                          </select>
                     </div>
                   </div>

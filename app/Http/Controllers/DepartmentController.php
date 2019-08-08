@@ -168,7 +168,7 @@ class DepartmentController extends Controller
     }
 
     public function getCourses(Department $department){
-        $courses = $department->courses;
+        $courses = $department->courses->where('is_deleted', false);
         return view('department.courses', compact('courses'));
     }
 }
