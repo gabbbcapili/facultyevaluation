@@ -41,6 +41,9 @@ class EvaluationListController extends Controller
                 ->addColumn('totalPersonalityandPoise', function(EvaluationList $evaluation) {
                            return $evaluation->totalPersonalityandPoise();
                         })
+                ->addColumn('date', function(EvaluationList $evaluation) {
+                           return Utilities::format_date($evaluation->created_at, 'M d, Y');
+                        })
                 ->addColumn('action', function(EvaluationList $evaluation) {
                             $html = Utilities::viewButtonHref(action('EvaluationListController@show', [$evaluation->id]));
                             return $html;

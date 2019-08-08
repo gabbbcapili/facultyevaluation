@@ -113,6 +113,9 @@ class EvaluationController extends Controller
         if ( request()->ajax()) {
            $evaluation = EvaluationList::where('evaluation_id', $evaluation->id);
             return Datatables::eloquent($evaluation)
+                ->addColumn('date', function(EvaluationList $evaluation) {
+                           return Utilities::format_date($evaluation->created_at, 'M d, Y');
+                        })
                 ->addColumn('student', function(EvaluationList $evaluation) {
                            return $evaluation->student ? $evaluation->student->getFullName() : '--';
                         })

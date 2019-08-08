@@ -2,7 +2,7 @@
   <div class="modal-content">
   	<div class="modal-header">
 		<button type="button" class="close no-print" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		<h4 class="modal-title" id="modalTitle">Evaluation for{{ $evaluation->faculty->getFullName() }}  - {{ App\Utilities::format_date($evaluation->start_date, 'M d, Y') }} 
+		<h4 class="modal-title" id="modalTitle">Evaluation for {{ $evaluation->faculty->getFullName() }}  - {{ App\Utilities::format_date($evaluation->start_date, 'M d, Y') }} 
 		</h4>
 	</div>
 	<div class="modal-body">
@@ -11,6 +11,7 @@
         <table id="evaluationlist-table" class="table table-bordered table-striped datatable">
           <thead>
           <tr>
+            <th class="text-center">Date</th>
             <th class="text-center">Subject</th>
             <th class="text-center">Course Planning/Preparation</th>
             <th class="text-center">Instructional Delivery</th>
@@ -27,9 +28,9 @@
       </div>
 	</div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary no-print" aria-label="Print" 
+    <!--   <button type="button" class="btn btn-primary no-print" aria-label="Print" 
       onclick="$(this).closest('div.modal-content').printThis();"><i class="fa fa-print"></i> Print
-      </button>
+      </button> -->
       <button type="button" class="btn btn-default no-print" data-dismiss="modal">Close</button>
     </div>
   </div>
@@ -43,6 +44,7 @@
         serverSide: true,
         ajax: '{{ action('EvaluationController@getEvaluationList', [$evaluation->id]) }}',
         columns: [
+            {data: 'date', name: 'created_at'},
             { data: 'subject', name: 'subject' },
             { data: 'totalCoursePlanning', name: 'totalCoursePlanning' },
             { data: 'totalInstructionalDelivery', name: 'totalInstructionalDelivery' },

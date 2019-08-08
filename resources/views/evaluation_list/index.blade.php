@@ -25,6 +25,7 @@
                 <table id="evaluationlist-table" class="table table-bordered table-striped datatable">
                   <thead>
                   <tr>
+                    <th class="text-center">Date</th>
                     <th class="text-center">Faculty</th>
                     <th class="text-center">Subject</th>
                     <th class="text-center">Course Planning/Preparation</th>
@@ -63,6 +64,7 @@
         serverSide: true,
         ajax: '{{ action('EvaluationListController@index') }}',
         columns: [
+            { data: 'date', name: 'created_at' },
             { data: 'faculty', name: 'faculty' },
             { data: 'subject', name: 'subject' },
             { data: 'totalCoursePlanning', name: 'totalCoursePlanning' },
