@@ -13,12 +13,13 @@
           <tr>
             <th class="text-center">Date</th>
             <th class="text-center">Subject</th>
+            <th class="text-center">Comments</th>
+            <th class="text-center">Total Comments</th>
             <th class="text-center">Course Planning/Preparation</th>
             <th class="text-center">Instructional Delivery</th>
             <th class="text-center">Assessment of Student Learning</th>
             <th class="text-center">Classroom Management</th>
             <th class="text-center">Personality Poise</th>
-            <th class="text-center">Comments</th>
             <th class="text-center">View Actual</th>
           </tr>
           </thead>
@@ -45,13 +46,14 @@
         ajax: '{{ action('EvaluationController@getEvaluationList', [$evaluation->id]) }}',
         columns: [
             {data: 'date', name: 'created_at'},
-            { data: 'subject', name: 'subject' },
+            { data: 'subjectclass', name: 'subjectclass.name' },
+            { data: 'comments', name: 'comments'},
+            { data: 'commentsTotals', name: 'commentsTotals'},
             { data: 'totalCoursePlanning', name: 'totalCoursePlanning' },
             { data: 'totalInstructionalDelivery', name: 'totalInstructionalDelivery' },
             { data: 'totalAssessment', name: 'totalAssessment' },
             { data: 'totalClassroomManagement', name: 'totalClassroomManagement' },
             { data: 'totalPersonalityandPoise', name: 'totalPersonalityandPoise' },
-            { data: 'comments', name: 'comments'},
             { data: 'action', name: 'action', orderable : false},
         ]
     });

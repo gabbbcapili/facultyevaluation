@@ -39,7 +39,7 @@
             	</div><br>
             	<div class="col-sm-6">
             		<div class="form-group">
-            			Subject: {{ ucfirst($evaluationList->subject) }}
+            			Subject: {{ $evaluationList->subjectclass->name }}
             		</div>
             	</div>
             	<div class="col-sm-2">
@@ -334,6 +334,15 @@
                   <div class="form-group">
                     <label>Comments:</label>
                     <textarea class="form-control" name="comments" id="comments" rows="5" disabled> {{ $evaluationList->comments }}</textarea>
+                  </div>
+                </div>
+              </div>  
+
+               <div class="row">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label>Summary for Comments:</label>
+                    {!! $evaluationList->getTotalForComments() !!}
                   </div>
                 </div>
               </div>  

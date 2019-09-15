@@ -26,4 +26,18 @@ class Utilities extends Model
     public static function deleteButton($action){
     	return '<a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-href="'. $action . '" class="btn btn-danger btn-sm modal_button"><i class="fa fa-trash"></i>';
     }
+
+    public static function dictionaryDropDownType($dictionaryType, $id){
+    	$types = ['Negative', 'Neutral', 'Positive'];
+    	$string =  '<select class="form-control type" data-id="'. $id .'" name="type" style="width:100%">';
+    	foreach($types as $type){
+    		$selected = '';
+    		if($type == $dictionaryType){
+    			$selected = 'selected';
+    		}
+    		$string .= '<option value="'. $type .'" '. $selected .'>'. $type .' </option>';
+    	}
+    	$string .= '</select>';
+    	return  $string;
+    }
 }

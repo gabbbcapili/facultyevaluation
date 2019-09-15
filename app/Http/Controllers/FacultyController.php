@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Subject;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -124,7 +125,8 @@ class FacultyController extends Controller
     {
         $departments = Department::all()->where('is_deleted', false);
         $civil_statuses = User::getCivilStatus();
-        return view('user.faculty.edit', compact('user' ,'departments', 'civil_statuses'));
+        $subjects = Subject::all()->where('is_deleted', false);
+        return view('user.faculty.edit', compact('user' ,'departments', 'civil_statuses', 'subjects'));
     }
 
     /**
@@ -137,14 +139,19 @@ class FacultyController extends Controller
     public function update(Request $request, User $user)
     {
          $validator = Validator::make($request->all(), Validation::userValidator($user->id));
-
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()]);
-            }
+        }
+        if(! $request->input('subjects') && $user->role == 'faculty'){
+            return response()->json(['error' => ['subjects[]' => 'This field is required']]);
+         }
         try {
             DB::beginTransaction();
             $data = $request->only(['department_id', 'first_name', 'middle_name', 'email' , 'last_name', 'bday', 'civil_status', 'contact_number', 'gender']);
             $user->touch();
+            if($request->input('subjects') && $user->role == 'faculty'){
+                $data['subjects'] = implode(',', $request->input('subjects'));
+            }
             $user = $user->update($data);
             DB::commit();
             $output = ['success' => 1,

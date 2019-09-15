@@ -65,6 +65,33 @@
             <li class="{{ $request->segment(1) == 'section' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('SectionController@index') }}"><i class="fa fa-list"></i>List Sections</a></li>
           </ul>
         </li>
+
+
+        <!-- subject -->
+       <li class="treeview {{ $request->segment(1) == 'subject' ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Subjects</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ $request->segment(1) == 'subject' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('SubjectController@index') }}"><i class="fa fa-list"></i>List Subjects</a></li>
+          </ul>
+        </li>
+
+        <!-- dictionary -->
+       <li class="treeview {{ $request->segment(1) == 'dictionary' ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-bookmark"></i> <span>Dictionary</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ $request->segment(1) == 'dictionary' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('DictionaryController@index') }}"><i class="fa fa-list"></i>List Dictionary</a></li>
+          </ul>
+        </li>
         @endif
 
         @if($request->user()->isEmployee())

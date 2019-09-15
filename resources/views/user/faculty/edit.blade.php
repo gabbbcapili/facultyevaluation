@@ -1,4 +1,13 @@
  @inject('request', 'Illuminate\Http\Request')
+ <style type="text/css">
+  .select2 {
+    width:100%!important;
+    color:black;
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__choice { 
+    color:black;
+   }
+ </style>
 <div class="modal-dialog modal-lg" role="document">
 	<form action="{{ action('FacultyController@update', [$user->id]) }}" method="POST" class="form" enctype='multipart/form-data'>
     @method('PUT')
@@ -38,14 +47,30 @@
           </div>
         </div>
       </div>
-        <div class="row">
+      <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
             <label>Faculty ID:</label>
             <input type="text" class="form-control" value="{{ $user->faculty_id }}" disabled>
           </div>
         </div>
+        @if($user->role == 'faculty')
+          <div class="col-sm-8">
+            <div class="form-group">
+              <label>Subjects:</label><br>
+              <select class="form-control" id="subjects" multiple name="subjects[]">
+               @foreach($subjects as $subject)
+                <option value="{{ $subject->id }}"{{ in_array($subject->id, explode(',', $user->subjects)) ? 'selected' : '' }}>{{ $subject->name }}</option>
+               @endforeach
+              </select>
+            </div>
+          </div>
+       @endif
     </div>
+
+
+
+    
     <div class="row">
       <div class="col-sm-4">
         <div class="form-group">
@@ -116,5 +141,12 @@
   </div>
   </form>
 </div>
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $.fn.modal.Constructor.prototype.enforceFocus = function () {};
+    $("#subjects").select2({
+      placeholder: 'Select Subjects',
+    });
+  });
+</script>
 <script src="{{ asset('js/forms/form-modal.js') }}"></script>

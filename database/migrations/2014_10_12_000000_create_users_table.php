@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->string('civil_status')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('gender')->nullable();
+            $table->string('subjects')->nullable();
             $table->enum('role', ['admin', 'dean', 'secretary', 'student', 'faculty'])->default('student');
             $table->boolean('active')->default(true);
             $table->rememberToken();

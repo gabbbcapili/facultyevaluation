@@ -111,8 +111,15 @@ class EvaluationController extends Controller
     public function getEvaluationList(Evaluation $evaluation)
     {
         if ( request()->ajax()) {
-           $evaluation = EvaluationList::where('evaluation_id', $evaluation->id);
+           $evaluation = EvaluationList::where('evaluation_id', $evaluation->id)->with('subjectclass');
             return Datatables::eloquent($evaluation)
+                ->addColumn('subjectclass', function(EvaluationList $evaluation) {
+                           return $evaluation->subject ? $evaluation->subjectclass->name : '--';
+                        })
+                ->addColumn('commentsTotals', function(EvaluationList $evaluation) {
+                           $totals = $evaluation->getTotalForComments();
+                           return $totals;
+                        })
                 ->addColumn('date', function(EvaluationList $evaluation) {
                            return Utilities::format_date($evaluation->created_at, 'M d, Y');
                         })
@@ -138,6 +145,7 @@ class EvaluationController extends Controller
                             $html = Utilities::viewButtonHref(action('EvaluationListController@show', [$evaluation->id]));
                             return $html;
                         })
+                ->rawColumns(['commentsTotals', 'action'])
                 ->make(true);
         }
         return view('evaluation.show', compact('evaluation'));

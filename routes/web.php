@@ -42,6 +42,12 @@ Route::get('course/getSections/{course}', 'CourseController@getSections')->middl
 //section
 Route::get('section/delete/{section}', 'SectionController@delete')->middleware('admin');
 
+//subject
+Route::get('subject/delete/{subject}', 'SubjectController@delete')->middleware('admin');
+
+//dictionary
+Route::get('dictionary/updateType/', 'DictionaryController@updateType')->middleware('admin');
+
 // resource contorller
 Route::resource('student', 'StudentController', ['parameters' => [
     'student' => 'user'
@@ -50,6 +56,8 @@ Route::resource('faculty', 'FacultyController', ['parameters' => [
     'faculty' => 'user'
 ]])->middleware('employee')->except(['destroy']);
 Route::resource('department', 'DepartmentController')->middleware('admin');
+Route::resource('subject', 'SubjectController')->middleware('admin');
+Route::resource('dictionary', 'DictionaryController')->middleware('admin');
 Route::resource('course', 'CourseController')->middleware('admin');
 Route::resource('section', 'SectionController')->middleware('admin');
 

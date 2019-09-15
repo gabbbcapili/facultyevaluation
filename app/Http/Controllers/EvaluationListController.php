@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Utilities;
 use App\Validation;
+use App\subject;
 
 class EvaluationListController extends Controller
 {
@@ -63,7 +64,8 @@ class EvaluationListController extends Controller
         $id = $request->input('e_id');
         $evaluation = Evaluation::findOrFail($id);
         $evaluation->checkDate();
-        return view('evaluation_list.create', compact('evaluation'));
+        $subjects = Subject::whereIn('id', explode(',', $evaluation->faculty->subjects))->get();
+        return view('evaluation_list.create', compact('evaluation', 'subjects'));
     }
 
     /**
@@ -84,6 +86,10 @@ class EvaluationListController extends Controller
             $data = $request->all();
             $data['user_id'] = $request->user()->id;
             EvaluationList::create($data);
+
+            $comments = explode(' ',$request->input('comments'));
+            $comments = EvaluationList::unsetInvalidComments($comments);
+            EvaluationList::createDictionaries($comments);
             DB::commit();
             $request->session()->flash('status', 'Successfully submitted an Evaluation!');
             $output = ['success' => 1,

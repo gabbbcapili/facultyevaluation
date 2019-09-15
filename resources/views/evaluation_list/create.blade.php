@@ -41,14 +41,24 @@
             	</div><br>
             	<div class="col-sm-6">
             		<div class="form-group">
-            			Subject:<input type="text" class="form-control" name="subject" id="subject">
+            			Subject:<select class="form-control" name="subject" id="subject">
+                    <option hidden selected disabled></option>
+                    @foreach($subjects as $subject)
+                      <option value="{{ $subject->id }}">{{ $subject->name }}</option>   
+                    @endforeach
+                  </select>
             		</div>
             	</div>
             	<div class="col-sm-2">
             	</div>
             	<div class="col-sm-4">
             		<div class="form-group">
-            			Semester:<input type="text" class="form-control" name="semester" id="semester">
+            			Semester:
+                  <select type="text" class="form-control" name="semester" id="semester">
+                    <option hidden selected disabled></option>
+                    <option>A.Y. {{ Carbon\Carbon::now()->format('Y') }}-{{ Carbon\Carbon::now()->addMonths(12)->format('Y') }} 1st Semester</option>
+                    <option>A.Y. {{ Carbon\Carbon::now()->format('Y') }}-{{ Carbon\Carbon::now()->addMonths(12)->format('Y') }} 2nd Semester</option>
+                  </select>
             		</div>
             	</div>
             	<div style="margin-left:5%">

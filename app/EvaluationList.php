@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Evaluation;
+use App\Subject;
+use App\Dictionary;
 
 class EvaluationList extends Model
 {
@@ -17,6 +19,10 @@ class EvaluationList extends Model
 
 	public function student(){
 		return $this->belongsTo(User::class, 'user_id');
+	}
+
+	public function subjectclass(){
+		return $this->belongsTo(Subject::class, 'subject');
 	}
 
 	public function totalCoursePlanning(){
@@ -41,6 +47,33 @@ class EvaluationList extends Model
 
 	public function evaluation(){
 		return $this->belongsTo(Evaluation::class, 'evaluation_id');
+	}
+
+	public static function unsetInvalidComments($comments, $length = 3){
+		foreach($comments as $key => $value){
+            if(strlen($value) <= $length){
+                unset($comments[$key]);
+            }
+        }
+        return $comments;
+	}
+
+	public static function createDictionaries(Array $comments){
+		foreach($comments as $comment){
+			if(Dictionary::where('word', $comment)->first() == null){
+				Dictionary::create(['word' => strtoupper($comment)]);
+			}
+		}
+	}
+
+	public function getTotalForComments(){
+		 $comments = $this->unsetInvalidComments(explode(' ', $this->comments));
+		 $positive =  Dictionary::whereIn('word', $comments)->where('type', 'Positive')->count();
+		 $neutral =  Dictionary::whereIn('word', $comments)->where('type', 'Neutral')->count();
+		 $negative =  Dictionary::whereIn('word', $comments)->where('type', 'Negative')->count();
+
+		 $string = '<br><font style="color:green"> Positive: ' . $positive . '</font><br> Neutral:  ' . $neutral . '<br><font style="color:red"> Negative: ' . $negative . '</font>';
+		 return $string;
 	}
 
 }
