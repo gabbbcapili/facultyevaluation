@@ -127,7 +127,7 @@ class FacultyController extends Controller
                 $comments = $list->unsetInvalidComments(explode(' ', $list->comments));
                 foreach($comments as $comment){
                         if(isset($words[$comment])){
-                             $words[$comment]+= 1;
+                             $words[$comment] += 1;
                         }else{
                             $words[$comment] = 1;
                         }

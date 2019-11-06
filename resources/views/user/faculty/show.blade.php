@@ -87,7 +87,7 @@
       <div class="col-sm-12">
         @foreach($words as $key => $value)
           @if($loop->iteration <= 5)
-            <label> {{ ucfirst($key) }} : </label> {{ $value }}<br>
+            <label> {{ ucfirst($key) }} : </label> {{ $value }} times used. (<b> {{ \App\Dictionary::where('word', $key)->first() ? \App\Dictionary::where('word', $key)->first()->type : '' }} </b>)<br>
           @endif
         @endforeach
       </div>
