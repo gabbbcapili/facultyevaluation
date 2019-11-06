@@ -24,21 +24,6 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('admin123'),
         ]);
 
-        User::create([
-            'first_name' => 'Gabriel',
-            'last_name' => 'Aquino',
-            'username' => 'Capili',
-            'student_id' => '201722015',
-            'username' => 'gabriel',
-            'department_id' => 1,
-            'course_id' => 1,
-            'section_id' => 1, 
-            'email' => 'gabbbcapili@gmail.com',
-            'contact_number' => '09993586492',
-            'gender' => 'Male',
-            'role' => 'student',
-            'password' => Hash::make('admin123'),
-        ]);
 
         User::create([
             'first_name' => 'Test',
@@ -49,7 +34,7 @@ class UsersTableSeeder extends Seeder
             'department_id' => 1,
             'course_id' => 1,
             'section_id' => 1, 
-            'email' => 'gabbcapili@gmail.com',
+            'email' => 'rojin@gmail.com',
             'contact_number' => '09993486492',
             'gender' => 'Female',
             'role' => 'student',
