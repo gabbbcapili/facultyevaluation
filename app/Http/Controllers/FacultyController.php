@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Department;
 use App\Validation;
 use Validator;
+use App\Evaluation;
 use App\Utilities;
 use Hash;
 
@@ -48,6 +49,9 @@ class FacultyController extends Controller
             ->addColumn('action', function(User $user) {
                             $html = Utilities::editButton(action('FacultyController@edit', [$user->id]));
                             $html .= Utilities::deleteButton(action('UserController@delete', [$user->id]));
+                            if($user->isFaculty()){
+                                $html .= Utilities::viewButton(action('FacultyController@show', [$user->id]));
+                            }
                             return $html;
                         })
             ->addColumn('department', function(User $user) {
@@ -112,7 +116,26 @@ class FacultyController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $evaluations = Evaluation::where('user_id', $user->id)->get();
+        $totals = ['positve' => 0, 'negative' => 0, 'neutral' => 0];
+        $words = [];
+        foreach($evaluations as $evaluation){
+            foreach($evaluation->list as $list){
+                $totals['positve'] += $list->getTotalForPositive();
+                $totals['negative'] += $list->getTotalForNegative();
+                $totals['neutral'] += $list->getTotalForNeutral();
+                $comments = $list->unsetInvalidComments(explode(' ', $list->comments));
+                foreach($comments as $comment){
+                        if(isset($words[$comment])){
+                             $words[$comment] += 1;
+                        }else{
+                            $words[$comment] = 1;
+                        }
+                    }
+                }
+            }
+        arsort($words);
+        return view('user.faculty.show', compact('user', 'totals', 'words'));
     }
 
     /**

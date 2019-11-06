@@ -76,4 +76,22 @@ class EvaluationList extends Model
 		 return $string;
 	}
 
+	public function getTotalForPositive(){
+		$comments = $this->unsetInvalidComments(explode(' ', $this->comments));
+		$positive =  Dictionary::whereIn('word', $comments)->where('type', 'Positive')->count();
+		return $positive;
+	}
+
+	public function getTotalForNeutral(){
+		$comments = $this->unsetInvalidComments(explode(' ', $this->comments));
+		$neutral =  Dictionary::whereIn('word', $comments)->where('type', 'Neutral')->count();
+		return $neutral;
+	}
+
+	public function getTotalForNegative(){
+		$comments = $this->unsetInvalidComments(explode(' ', $this->comments));
+		$negative =  Dictionary::whereIn('word', $comments)->where('type', 'Negative')->count();
+		return $negative;
+	}
+
 }

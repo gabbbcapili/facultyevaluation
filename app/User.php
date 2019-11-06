@@ -72,6 +72,14 @@ class User extends Authenticatable
         }
     }
 
+    public function isFaculty(){
+        if ($this->role == 'faculty'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public static function getCivilStatus(){
         return [
             'Single',
