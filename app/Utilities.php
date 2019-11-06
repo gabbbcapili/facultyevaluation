@@ -24,7 +24,7 @@ class Utilities extends Model
 	}
 
     public static function deleteButton($action){
-    	return '<a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-href="'. $action . '" class="btn btn-danger btn-sm modal_button"><i class="fa fa-trash"></i>';
+    	return '<a href="#" data-toggle="tooltip" data-placement="top" title="Delete" data-href="'. $action . '" class="btn btn-danger btn-sm modal_button margin-r-10"><i class="fa fa-trash"></i>';
     }
 
     public static function dictionaryDropDownType($dictionaryType, $id){
