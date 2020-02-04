@@ -92,6 +92,18 @@
             <li class="{{ $request->segment(1) == 'dictionary' && $request->segment(2) == '' ? 'active' : '' }}"><a href="{{ action('DictionaryController@index') }}"><i class="fa fa-list"></i>List Dictionary</a></li>
           </ul>
         </li>
+
+        <li class="treeview {{ $request->segment(1) == 'report' ? 'active' : '' }}">
+          <a href="#">
+            <i class="fa fa-file"></i> <span>Reports</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ $request->segment(1) == 'report' && $request->segment(2) == 'evaluation' ? 'active' : '' }}"><a href="{{ action('ReportController@index') }}"><i class="fa fa-list"></i>Evaluation Reports</a></li>
+          </ul>
+        </li>
         @endif
 
         @if($request->user()->isEmployee())

@@ -1,12 +1,12 @@
 @inject('request', 'Illuminate\Http\Request')
 @extends('layouts.base')
-@section('title', 'Dashboard')
+@section('title', 'Home')
 
 @section('content')
    <!-- Content Header (Page header) -->
     <section class="content-header no-print">
       <h1>
-        Dashboard
+        Home
       </h1>
     </section>
     <!-- Main content -->
@@ -15,7 +15,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Dashboard</h3>
+              <h3 class="box-title">Home</h3>
             </div> <!-- /.box-header -->
              <div class="box-body">
               @if($request->user()->isStudent())

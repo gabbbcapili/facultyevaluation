@@ -29,6 +29,9 @@ Route::post('student/import', 'StudentController@postImport')->middleware('emplo
 Route::delete('user/{user}', 'UserController@destroy')->middleware('admin');
 Route::get('user/delete/{user}', 'UserController@delete')->middleware('admin');
 
+Route::get('report/evaluation', 'ReportController@index')->middleware('admin')->name('report.index');
+Route::get('report/getEmployees/{department}', 'ReportController@getEmployees')->middleware('admin');
+
 //evaluation
 Route::get('evaluation/delete/{evaluation}', 'EvaluationController@delete');
 
