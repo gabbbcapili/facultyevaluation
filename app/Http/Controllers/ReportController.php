@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 class ReportController extends Controller
 {
     public function index(Request $request){
+    	if ( request()->ajax()) {
+           $evaluation = Evaluation::with('faculty', 'department')
+                            ->select('evaluations.id', 'evaluations.user_id', 'evaluations.department_id' , 'evaluations.start_date', 'evaluations.end_date');
 
             $department_id = $request->get('department_id');
             $employee_id = $request->get('employee_id');
